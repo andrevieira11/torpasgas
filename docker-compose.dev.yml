@@ -1,0 +1,19 @@
+# Dev-only Postgres. Port 5433 so it never collides with another local Postgres.
+# DATABASE_URL=postgres://torpasgas:torpasgas@localhost:5433/torpasgas?sslmode=disable
+name: torpasgas-dev
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: torpasgas
+      POSTGRES_PASSWORD: torpasgas
+      POSTGRES_DB: torpasgas
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata-dev:/var/lib/postgresql/data
+
+volumes:
+  pgdata-dev:

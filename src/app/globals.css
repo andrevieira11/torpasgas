@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+/* Class-based dark mode (next-themes toggles `.dark` on <html>). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Design tokens. Quiet neutral chrome; one warm brand accent (fuel orange) plus
+ * two data hues so the charts read as data: spend = brand, consumption = blue.
+ */
+:root {
+  --bg: #fafaf8;
+  --surface: #ffffff;
+  --surface-2: #f4f3f0;
+  --hairline: #eceae6;
+  --fg: #1c1b19;
+  --muted: #6b6862;
+
+  --brand: #b9541f;
+  --brand-soft: #f6e3d7;
+  --data-blue: #3e6db0;
+  --data-blue-soft: #d8e2f2;
+
+  --good: #3f8f5b;
+  --warn: #c98a1a;
+  --over: #c2455b;
+}
+
+.dark {
+  --bg: #0e0f11;
+  --surface: #16181b;
+  --surface-2: #1d2024;
+  --hairline: #24272b;
+  --fg: #eceaea;
+  --muted: #9a9c9e;
+
+  --brand: #e07a45;
+  --brand-soft: #38241a;
+  --data-blue: #5e92d6;
+  --data-blue-soft: #16263f;
+
+  --good: #5bb87b;
+  --warn: #e0a53e;
+  --over: #d86b7e;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-hairline: var(--hairline);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+
+  --color-brand: var(--brand);
+  --color-brand-soft: var(--brand-soft);
+  --color-data-blue: var(--data-blue);
+  --color-data-blue-soft: var(--data-blue-soft);
+
+  --color-good: var(--good);
+  --color-warn: var(--warn);
+  --color-over: var(--over);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  border-color: var(--hairline);
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Tailwind v4 no longer sets pointer on buttons — restore it for interactive elements. */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled),
+  label[for],
+  summary,
+  select:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/* Prevent iOS auto-zoom on focus — inputs must be >= 16px on phones. Unlayered so it
+   wins over Tailwind text-sm utilities. */
+@media (max-width: 640px) {
+  input:not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+/* Respect the iOS notch / home indicator for bottom-fixed UI. */
+@utility pb-safe {
+  padding-bottom: max(env(safe-area-inset-bottom), 0.5rem);
+}
+@utility pt-safe {
+  padding-top: max(env(safe-area-inset-top), 0.75rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

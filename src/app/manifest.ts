@@ -1,0 +1,27 @@
+import type { MetadataRoute } from "next";
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: "Tanque",
+    short_name: "Tanque",
+    description: "Fuel spend and consumption, at a glance.",
+    start_url: "/",
+    display: "standalone",
+    background_color: "#fafaf8",
+    theme_color: "#fafaf8",
+    icons: [
+      {
+        src: "/icon.svg",
+        sizes: "any",
+        type: "image/svg+xml",
+        purpose: "any",
+      },
+      {
+        src: "/icon.svg",
+        sizes: "any",
+        type: "image/svg+xml",
+        purpose: "maskable",
+      },
+    ],
+  };
+}
