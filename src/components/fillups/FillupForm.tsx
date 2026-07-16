@@ -91,38 +91,41 @@ export function FillupForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {/* type="text" + inputMode, NOT type="number": iOS shows the pt-PT keypad
+            with a comma key but number inputs silently reject "," — text inputs
+            accept it, and parsing normalises "," to "." */}
         <Field label="Total €">
           <input
-            type="number"
+            type="text"
             inputMode="decimal"
-            step="0.01"
-            min="0.01"
+            pattern="\d+([.,]\d{1,2})?"
+            title="e.g. 45,50"
             required
             value={total}
             onChange={(e) => setTotal(e.target.value)}
-            placeholder="45.50"
+            placeholder="45,50"
             className={inputCls}
           />
         </Field>
         <Field label="Liters">
           <input
-            type="number"
+            type="text"
             inputMode="decimal"
-            step="0.01"
-            min="0.01"
+            pattern="\d+([.,]\d{1,3})?"
+            title="e.g. 32,4"
             required
             value={liters}
             onChange={(e) => setLiters(e.target.value)}
-            placeholder="32.4"
+            placeholder="32,4"
             className={inputCls}
           />
         </Field>
         <Field label="Odometer km">
           <input
-            type="number"
+            type="text"
             inputMode="numeric"
-            step="1"
-            min="0"
+            pattern="\d+"
+            title="whole km, e.g. 123456"
             required
             value={odometer}
             onChange={(e) => setOdometer(e.target.value)}
