@@ -96,6 +96,20 @@ body {
   }
 }
 
+/* iOS Safari gives date inputs a large intrinsic min-width and its own chrome, so
+   they ignore w-full and overflow their grid cell. Strip the native appearance and
+   let the field shrink; keep the text left-aligned like the other inputs. */
+input[type="date"] {
+  min-width: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  text-align: left;
+}
+input[type="date"]::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+
 /* Respect the iOS notch / home indicator for bottom-fixed UI. */
 @utility pb-safe {
   padding-bottom: max(env(safe-area-inset-bottom), 0.5rem);
